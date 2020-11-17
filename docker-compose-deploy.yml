@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres:10
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=q1w2e3r4
+    - POSTGRES_DB=hugin
+    ports:
+    - "5432:5432"
+
+  web:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    environment:
+    - SECRET_KEY=samplesecret123
+    - ALLOWED_HOSTS=127.0.0.1,localhost,192.168.56.112
+    - DEBUG=1
+    command: uwsgi --ini ./odin_restful_uwsgi_deploy.ini
+    volumes:
+    - ./odin_restful:/odin_restful
+    # - static_data:/vol/webs
+
+  nginx:
+    build:
+        context: ./nginx
+        dockerfile: Dockerfile
+    volumes:
+    - static_data:/vol/static
+    ports:
+    - "8080:8080"
+    # depends_on:
+    #   - app
+
+volumes:
+  static_data:
+  pgdata:

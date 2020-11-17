@@ -1,0 +1,13 @@
+{
+    "python.pythonPath": "/root/.local/share/virtualenvs/odin_restful-LPU06mLR/bin/python",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "odin_restful",
+            "database": "D:\\Wistron\\Code\\odin_restful\\db.sqlite3",
+            "group": "odin"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

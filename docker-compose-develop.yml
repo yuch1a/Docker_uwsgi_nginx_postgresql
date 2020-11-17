@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres:10
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=q1w2e3r4
+    - POSTGRES_DB=hugin
+    ports:
+    - "5432:5432"
+
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #   - ./odin_restful:/odin_restful
+  #   environment:
+  #   - SECRET_KEY=samplesecret123
+  #   - ALLOWED_HOSTS=127.0.0.1,localhost,192.168.56.112
+  #   - DEBUG=1
+  #   command: uwsgi --ini ./odin_restful_uwsgi.ini
+
+
+  mysite:
+    build:
+      context: ./django
+      dockerfile: Dockerfile
+    volumes:
+    - ./django/mysite:/mysite
+    environment:
+    - SECRET_KEY=samplesecret123
+    - ALLOWED_HOSTS=127.0.0.1,localhost,192.168.56.112
+    - DEBUG=1
+    command: uwsgi --ini ./mysite_uwsgi.ini
+  
+  # web2:
+  #   build:
+  #       context: ./django
+  #       dockerfile: Dockerfile
+  #   container_name: django_web
+  #   environment:
+  #     - DATABASE_URL
+  #   volumes:
+  #     - .:/code
+  #   command: python manage.py runserver 0.0.0.0:8000
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - db
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+    - static_data:/vol/static
+    ports:
+    - "8080:8080"
+    # depends_on:
+    #   - app
+
+volumes:
+  static_data:
+  pgdata:

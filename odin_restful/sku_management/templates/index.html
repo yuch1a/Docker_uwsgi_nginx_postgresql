@@ -1,0 +1,9 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <ul>
+    <li><strong>SKUs:</strong> {{ num_skus }}</li>
+  </ul>
+  <p>fffYou have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+
+{% endblock %}

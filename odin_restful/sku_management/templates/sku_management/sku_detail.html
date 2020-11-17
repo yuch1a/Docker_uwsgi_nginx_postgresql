@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>{{ sku.name }}</h1>
+  <p><strong>Test Plan Path:</strong> {{ sku.test_plan_path }}</p>
+
+  <div class="row">
+    <div class="col-md-2">
+        <h4>Test Configuration</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for config in sku.testconfig_set.all %}
+                <tr>
+                    <td>{{config.name}}</td>
+                    <td>{{config.value}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h4>MO List</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mo in sku.manufacturingorder_set.all %}
+                <tr>
+                    <td>{{mo.mo}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  </div>
+
+{% endblock %}

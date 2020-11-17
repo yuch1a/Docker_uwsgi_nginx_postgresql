@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>SKU List</h1>
+    <a class="btn btn-primary" href="{% url 'sku_create' %}" role="button">Add New SKU</a>
+    {% if sku_list %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Name</th>
+                    <th class="text-center">Action</th>
+                    <th>Last Modified</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for sku in sku_list %}
+                <tr>
+                    <td class="col-md-1">{{forloop.counter}}</td>
+                    <td>{{sku.product}}</td>
+                    <td><a href="{% url 'sku-detail' sku.pk %}">{{ sku.name }}</a></td>
+                    <td class="text-center"><a href="{% url 'sku_update' sku.pk %}">Update</a> | <a href="{% url 'sku_delete' sku.pk %}">Delete</a></td>
+                    <td>{{sku.modified_at | date:"Y/m/d  H:m:s"}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+      <p>There are no sku in the database.</p>
+    {% endif %}
+{% endblock %}
