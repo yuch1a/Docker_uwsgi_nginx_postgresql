@@ -13,17 +13,17 @@ services:
     ports:
     - "5432:5432"
 
-  # web:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #   - ./odin_restful:/odin_restful
-  #   environment:
-  #   - SECRET_KEY=samplesecret123
-  #   - ALLOWED_HOSTS=127.0.0.1,localhost,192.168.56.112
-  #   - DEBUG=1
-  #   command: uwsgi --ini ./odin_restful_uwsgi.ini
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+    - ./odin_restful:/odin_restful
+    environment:
+    - SECRET_KEY=samplesecret123
+    - ALLOWED_HOSTS=127.0.0.1,localhost,192.168.56.112
+    - DEBUG=1
+    command: uwsgi --ini ./odin_restful_uwsgi.ini
 
 
   mysite:
@@ -61,6 +61,7 @@ services:
     - static_data:/vol/static
     ports:
     - "8080:8080"
+    - "8082:8082"
     # depends_on:
     #   - app
 
